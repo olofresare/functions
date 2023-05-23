@@ -37,19 +37,23 @@ if (!function_exists('array_column')) {
 // print "<br /><br /><br /><pre>"; print_r($first_names); print "</pre>";
 
 # Sort a multidimensional array after sub value
-function array_sort_subval($a, $subkey, $order = 'asc') {
-	$b = array();
+function array_sort_subval($a, $subkey, $order = 'asc', $reset = true) {
+	$b = [];
+	$c = [];
+
 	foreach ($a as $k => $v) {
 		$b[$k] = mb_strtolower($v[$subkey]);
 	}
 	
 	$order = ($order === 'desc') ? arsort($b) : asort($b);
-	
+
 	foreach ($b as $key => $val) {
 		$c[$key] = $a[$key];
 	}
 
-	return $c;
+	$c = $reset ? array_values($c) : $c;
+
+	return $b;
 }
 # Usage:
 // $companies = array();
